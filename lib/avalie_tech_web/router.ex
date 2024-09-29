@@ -21,6 +21,7 @@ defmodule AvalieTechWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+    live "/test", LandingLive
   end
 
   # Other scopes may use custom stacks.
