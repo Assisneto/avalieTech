@@ -17,7 +17,7 @@ defmodule AvalieTechWeb.CoreComponents do
   use Phoenix.Component
 
   alias Phoenix.LiveView.JS
-  import AvalieTechWeb.Gettext
+  use Gettext, backend: AvalieTechWeb.Gettext
 
   @doc """
   Renders a modal.

@@ -43,7 +43,7 @@ defmodule AvalieTechWeb do
         layouts: [html: AvalieTechWeb.Layouts]
 
       import Plug.Conn
-      import AvalieTechWeb.Gettext
+      use Gettext, backend: AvalieTechWeb.Gettext
 
       unquote(verified_routes())
     end
@@ -85,7 +85,7 @@ defmodule AvalieTechWeb do
       import Phoenix.HTML
       # Core UI components and translation
       import AvalieTechWeb.CoreComponents
-      import AvalieTechWeb.Gettext
+      use Gettext, backend: AvalieTechWeb.Gettext
 
       # Shortcut for generating JS commands
       alias Phoenix.LiveView.JS
