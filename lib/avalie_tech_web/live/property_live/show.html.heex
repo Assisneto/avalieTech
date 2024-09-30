@@ -1,0 +1,35 @@
+<.header>
+  Property <%= @property.id %>
+  <:subtitle>This is a property record from your database.</:subtitle>
+  <:actions>
+    <.link patch={~p"/appraisal/#{@property}/show/edit"} phx-click={JS.push_focus()}>
+      <.button>Edit property</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Property type"><%= @property.property_type %></:item>
+  <:item title="Owner"><%= @property.owner %></:item>
+  <:item title="Registration"><%= @property.registration %></:item>
+  <:item title="Land area"><%= @property.land_area %></:item>
+  <:item title="Built area"><%= @property.built_area %></:item>
+  <:item title="Common area"><%= @property.common_area %></:item>
+  <:item title="Garage area"><%= @property.garage_area %></:item>
+  <:item title="Storage area"><%= @property.storage_area %></:item>
+  <:item title="Total area"><%= @property.total_area %></:item>
+  <:item title="Ideal fraction"><%= @property.ideal_fraction %></:item>
+</.list>
+
+<.back navigate={~p"/appraisal"}>Back to properties</.back>
+
+<.modal :if={@live_action == :edit} id="property-modal" show on_cancel={JS.patch(~p"/appraisal/#{@property}")}>
+  <.live_component
+    module={AvalieTechWeb.PropertyLive.FormComponent}
+    id={@property.id}
+    title={@page_title}
+    action={@live_action}
+    property={@property}
+    patch={~p"/appraisal/#{@property}"}
+  />
+</.modal>

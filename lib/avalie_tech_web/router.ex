@@ -22,6 +22,11 @@ defmodule AvalieTechWeb.Router do
 
     get "/", PageController, :home
     live "/test", LandingLive
+    live "/appraisal", PropertyLive.Index, :index
+    live "/appraisal/new", PropertyLive.Index, :new
+    live "/appraisal/:id/edit", PropertyLive.Index, :edit
+    live "/appraisal/:id", PropertyLive.Show, :show
+    live "/appraisal/:id/show/edit", PropertyLive.Show, :edit
   end
 
   # Other scopes may use custom stacks.

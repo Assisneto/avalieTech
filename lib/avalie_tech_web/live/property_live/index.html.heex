@@ -1,0 +1,50 @@
+<.header>
+  Listagem de Imóveis
+  <:actions>
+    <.link patch={~p"/appraisal/new"}>
+      <.button>Novo Imóvel</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table
+  id="properties"
+  rows={@streams.properties}
+  row_click={fn {_id, property} -> JS.navigate(~p"/appraisal/#{property}") end}
+>
+  <:col :let={{_id, property}} label="Tipo do Imóvel"><%= property.property_type %></:col>
+  <:col :let={{_id, property}} label="Proprietário"><%= property.owner %></:col>
+  <:col :let={{_id, property}} label="Matrícula"><%= property.registration %></:col>
+  <:col :let={{_id, property}} label="Área do Terreno"><%= property.land_area %></:col>
+  <:col :let={{_id, property}} label="Área Construída"><%= property.built_area %></:col>
+  <:col :let={{_id, property}} label="Área Comum"><%= property.common_area %></:col>
+  <:col :let={{_id, property}} label="Área da Garagem"><%= property.garage_area %></:col>
+  <:col :let={{_id, property}} label="Área de Depósito"><%= property.storage_area %></:col>
+  <:col :let={{_id, property}} label="Área Total"><%= property.total_area %></:col>
+  <:col :let={{_id, property}} label="Fração Ideal"><%= property.ideal_fraction %></:col>
+  <:action :let={{_id, property}}>
+    <div class="sr-only">
+      <.link navigate={~p"/appraisal/#{property}"}>Mostrar</.link>
+    </div>
+    <.link patch={~p"/appraisal/#{property}/edit"}>Editar</.link>
+  </:action>
+  <:action :let={{id, property}}>
+    <.link
+      phx-click={JS.push("delete", value: %{id: property.id}) |> hide("##{id}")}
+      data-confirm="Tem certeza?"
+    >
+      Excluir
+    </.link>
+  </:action>
+</.table>
+
+<.modal :if={@live_action in [:new, :edit]} id="property-modal" show on_cancel={JS.patch(~p"/appraisal")}>
+  <.live_component
+    module={AvalieTechWeb.PropertyLive.FormComponent}
+    id={@property.id || :new}
+    title={@page_title}
+    action={@live_action}
+    property={@property}
+    patch={~p"/appraisal"}
+  />
+</.modal>
