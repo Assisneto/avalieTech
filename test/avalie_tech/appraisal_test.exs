@@ -8,7 +8,18 @@ defmodule AvalieTech.AppraisalTest do
 
     import AvalieTech.AppraisalFixtures
 
-    @invalid_attrs %{owner: nil, property_type: nil, registration: nil, land_area: nil, built_area: nil, common_area: nil, garage_area: nil, storage_area: nil, total_area: nil, ideal_fraction: nil}
+    @invalid_attrs %{
+      owner: nil,
+      property_type: nil,
+      registration: nil,
+      land_area: nil,
+      built_area: nil,
+      common_area: nil,
+      garage_area: nil,
+      storage_area: nil,
+      total_area: nil,
+      ideal_fraction: nil
+    }
 
     test "list_properties/0 returns all properties" do
       property = property_fixture()
@@ -21,7 +32,18 @@ defmodule AvalieTech.AppraisalTest do
     end
 
     test "create_property/1 with valid data creates a property" do
-      valid_attrs = %{owner: "some owner", property_type: "some property_type", registration: "some registration", land_area: 42, built_area: 42, common_area: 42, garage_area: 42, storage_area: 42, total_area: 42, ideal_fraction: 42}
+      valid_attrs = %{
+        owner: "some owner",
+        property_type: "some property_type",
+        registration: "some registration",
+        land_area: 42,
+        built_area: 42,
+        common_area: 42,
+        garage_area: 42,
+        storage_area: 42,
+        total_area: 42,
+        ideal_fraction: 42
+      }
 
       assert {:ok, %Property{} = property} = Appraisal.create_property(valid_attrs)
       assert property.owner == "some owner"
@@ -42,7 +64,19 @@ defmodule AvalieTech.AppraisalTest do
 
     test "update_property/2 with valid data updates the property" do
       property = property_fixture()
-      update_attrs = %{owner: "some updated owner", property_type: "some updated property_type", registration: "some updated registration", land_area: 43, built_area: 43, common_area: 43, garage_area: 43, storage_area: 43, total_area: 43, ideal_fraction: 43}
+
+      update_attrs = %{
+        owner: "some updated owner",
+        property_type: "some updated property_type",
+        registration: "some updated registration",
+        land_area: 43,
+        built_area: 43,
+        common_area: 43,
+        garage_area: 43,
+        storage_area: 43,
+        total_area: 43,
+        ideal_fraction: 43
+      }
 
       assert {:ok, %Property{} = property} = Appraisal.update_property(property, update_attrs)
       assert property.owner == "some updated owner"

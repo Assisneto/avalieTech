@@ -22,7 +22,29 @@ defmodule AvalieTech.Appraisal.Property do
   @doc false
   def changeset(property, attrs) do
     property
-    |> cast(attrs, [:property_type, :owner, :registration, :land_area, :built_area, :common_area, :garage_area, :storage_area, :total_area, :ideal_fraction])
-    |> validate_required([:property_type, :owner, :registration, :land_area, :built_area, :common_area, :garage_area, :storage_area, :total_area, :ideal_fraction])
+    |> cast(attrs, [
+      :property_type,
+      :owner,
+      :registration,
+      :land_area,
+      :built_area,
+      :common_area,
+      :garage_area,
+      :storage_area,
+      :total_area,
+      :ideal_fraction
+    ])
+    |> validate_required([
+      :property_type,
+      :owner,
+      :registration,
+      :land_area,
+      :built_area,
+      :common_area,
+      :garage_area,
+      :storage_area,
+      :total_area,
+      :ideal_fraction
+    ])
   end
 end

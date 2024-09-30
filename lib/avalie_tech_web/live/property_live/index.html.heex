@@ -38,7 +38,12 @@
   </:action>
 </.table>
 
-<.modal :if={@live_action in [:new, :edit]} id="property-modal" show on_cancel={JS.patch(~p"/appraisal")}>
+<.modal
+  :if={@live_action in [:new, :edit]}
+  id="property-modal"
+  show
+  on_cancel={JS.patch(~p"/appraisal")}
+>
   <.live_component
     module={AvalieTechWeb.PropertyLive.FormComponent}
     id={@property.id || :new}

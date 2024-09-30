@@ -23,7 +23,12 @@
 
 <.back navigate={~p"/appraisal"}>Back to properties</.back>
 
-<.modal :if={@live_action == :edit} id="property-modal" show on_cancel={JS.patch(~p"/appraisal/#{@property}")}>
+<.modal
+  :if={@live_action == :edit}
+  id="property-modal"
+  show
+  on_cancel={JS.patch(~p"/appraisal/#{@property}")}
+>
   <.live_component
     module={AvalieTechWeb.PropertyLive.FormComponent}
     id={@property.id}
