@@ -48,18 +48,18 @@ if config_env() == :prod do
       You can generate one by calling: mix phx.gen.secret
       """
 
-  host = System.get_env("PHX_HOST") || "example.com"
+  host = System.get_env("PHX_HOST") || "avalietech.com.br"
   port = String.to_integer(System.get_env("PORT") || "4000")
 
   config :avalie_tech, :dns_cluster_query, System.get_env("DNS_CLUSTER_QUERY")
 
   config :avalie_tech, AvalieTechWeb.Endpoint,
-    url: [host: host, port: port, scheme: "http"],
+    url: [host: host, port: 80, scheme: "http"],
     http: [
       ip: {0, 0, 0, 0},
       port: port
     ],
-    check_origin: ["//#{host}"],
+    check_origin: ["//#{host}", "//www.#{host}"],
     secret_key_base: secret_key_base
 
   # ## SSL Support
