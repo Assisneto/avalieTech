@@ -40,8 +40,7 @@ jobs:
         run: mix deps.get
 
       - name: Compile assets
-        run: |
-          mix assets.deploy
+        run: mix assets.deploy
 
       - name: Generate release
         run: MIX_ENV=prod mix release
@@ -62,15 +61,34 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: |
+            set -e  # Encerra o script se qualquer comando falhar
+
+            # Exporta variáveis de ambiente
             export DATABASE_URL=${{ secrets.DATABASE_URL }}
             export PHX_SERVER=${{ secrets.PHX_SERVER }}
             export SECRET_KEY_BASE=${{ secrets.SECRET_KEY_BASE }}
             export PHX_HOST=${{ secrets.PHX_HOST }}
             export PORT=${{ secrets.PORT }}
+
+            echo "Configurando permissões para o binário..."
             chmod +x _build/prod/rel/avalie_tech/bin/avalie_tech
 
-            kill $(lsof -ti tcp:${{ secrets.PORT }}) || echo "No process to kill."
+            echo "Verificando se o aplicativo está rodando na porta ${PORT}..."
+            PIDS=$(lsof -ti tcp:${PORT})
 
+            if [ -n "$PIDS" ]; then
+              echo "Matando processos existentes: $PIDS"
+              kill $PIDS
+              echo "Aguardando a finalização dos processos..."
+              sleep 5  # Aguarda 5 segundos para garantir que os processos sejam finalizados
+            else
+              echo "Nenhum processo encontrado na porta ${PORT}."
+            fi
+
+            echo "Executando migrações..."
             _build/prod/rel/avalie_tech/bin/avalie_tech eval 'AvalieTech.Release.migrate()'
 
+            echo "Iniciando o aplicativo..."
             nohup _build/prod/rel/avalie_tech/bin/avalie_tech start > nohup.out 2> nohup.err &
+
+            echo "Deploy concluído com sucesso."
