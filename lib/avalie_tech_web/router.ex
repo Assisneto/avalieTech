@@ -20,8 +20,7 @@ defmodule AvalieTechWeb.Router do
   scope "/", AvalieTechWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
-    live "/test", LandingLive
+    live "/", LandingLive
     live "/appraisal", PropertyLive.Index, :index
     live "/appraisal/new", PropertyLive.Index, :new
     live "/appraisal/:id/edit", PropertyLive.Index, :edit
