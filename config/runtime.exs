@@ -62,6 +62,10 @@ if config_env() == :prod do
     check_origin: ["//#{host}", "//www.#{host}"],
     secret_key_base: secret_key_base
 
+  config :avalie_tech, AvalieTech.Mailer,
+    adapter: Swoosh.Adapters.Sendgrid,
+    api_key: System.fetch_env!("SENDGRID_API_KEY")
+
   # ## SSL Support
   #
   # To get SSL working, you will need to add the `https` key
