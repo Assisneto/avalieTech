@@ -69,12 +69,13 @@ jobs:
             export SECRET_KEY_BASE=${{ secrets.SECRET_KEY_BASE }}
             export PHX_HOST=${{ secrets.PHX_HOST }}
             export PORT=${{ secrets.PORT }}
+            export SENDGRID_API_KEY=${{ secrets.SENDGRID_API_KEY }}
 
             echo "Configurando permissões para o binário..."
             chmod +x _build/prod/rel/avalie_tech/bin/avalie_tech
 
             echo "Verificando se o aplicativo está rodando na porta ${PORT}..."
-            PIDS=$(lsof -ti tcp:${PORT})
+            PIDS=$(lsof -ti tcp:${PORT} || true)
 
             if [ -n "$PIDS" ]; then
               echo "Matando processos existentes: $PIDS"
