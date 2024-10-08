@@ -34,7 +34,6 @@ config :avalie_tech, AvalieTech.Mailer, adapter: Swoosh.Adapters.Local
 config :swoosh,
   serve_mailbox: false,
   api_client: false,
-  preview_port: 4001,
   logger: true
 
 # Configure esbuild (the version is required)
