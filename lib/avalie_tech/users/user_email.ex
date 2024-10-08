@@ -4,7 +4,7 @@ defmodule AvalieTech.Users.UserEmail do
   def experiment_email(user) do
     new()
     |> to({user.name, user.email})
-    |> from({"AvalieTech", "no-reply@avalietech.com"})
+    |> from({"AvalieTech", "avalietech@gmail.com"})
     |> subject("Experimente Agora AvalieTech")
     |> html_body("<h1>Olá, #{user.name}!</h1><p>Obrigado por experimentar o AvalieTech!</p>")
     |> text_body("Olá, #{user.name}! Obrigado por experimentar o AvalieTech!")
