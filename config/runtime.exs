@@ -64,7 +64,11 @@ if config_env() == :prod do
 
   config :avalie_tech, AvalieTech.Mailer,
     adapter: Swoosh.Adapters.Sendgrid,
-    api_key: System.fetch_env!("SENDGRID_API_KEY")
+    api_key:
+      System.get_env("SENDGRID_API_KEY") ||
+        raise("""
+        environment variable SENDGRID_API_KEY is missing.
+        """)
 
   # ## SSL Support
   #
