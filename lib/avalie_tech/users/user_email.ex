@@ -1,12 +1,20 @@
 defmodule AvalieTech.Users.UserEmail do
   import Swoosh.Email
 
+  use Phoenix.Swoosh,
+    template_root: "lib/avalie_tech_web/templates",
+    template_path: "user_emails"
+
+  use Phoenix.VerifiedRoutes, endpoint: AvalieTechWeb.Endpoint, router: AvalieTechWeb.Router
+
   def experiment_email(user) do
     new()
     |> to({user.name, user.email})
     |> from({"AvalieTech", "avalietech@gmail.com"})
-    |> subject("Experimente Agora AvalieTech")
-    |> html_body("<h1>Olá, #{user.name}!</h1><p>Obrigado por experimentar o AvalieTech!</p>")
-    |> text_body("Olá, #{user.name}! Obrigado por experimentar o AvalieTech!")
+    |> subject("Bem-vindo ao AvalieTech!")
+    |> render_body("experiment_email.html", %{
+      user: user,
+      url: path(@endpoint, ~p"/users/register")
+    })
   end
 end
