@@ -570,6 +570,14 @@ defmodule AvalieTechWeb.CoreComponents do
     """
   end
 
+  def header_button(assigns) do
+    ~H"""
+    <.link href={@href} class="text-primary font-bold text-xs">
+      <%= render_slot(@inner_block) %>
+    </.link>
+    """
+  end
+
   @doc """
   Renders a [Heroicon](https://heroicons.com).
 
