@@ -1,0 +1,80 @@
+Table Property {
+  id uuid pk
+  owner text
+  registration_number text
+  address_id uuid [ref: > Address.id]
+}
+
+Table Address {
+  id uuid pk
+  street_address text
+  complement text
+  neighborhood text
+  city text
+  state text
+  postal_code text
+  latitude float
+  longitude float
+}
+
+Table AppraisalReports {
+  id uuid pk
+  user_id uuid [ref: > Users.id]
+  property_id uuid [ref: > Property.id] // The property being appraised
+  requester text
+  request_date date
+  inspection_date date
+  report_date date
+  objective text // predefined values
+  intended_use text // predefined values
+  lower_value decimal
+  market_value decimal
+  upper_value decimal
+  general_comments text
+  methodology text
+  data_processing text
+}
+
+Table AppraisalComparables {
+  appraisal_report_id uuid [ref: > AppraisalReports.id]
+  comparable_property_id uuid [ref: > Property.id]
+  primary key (appraisal_report_id, comparable_property_id)
+}
+
+Table PropertyDetails {
+  id uuid pk
+  property_id uuid [ref: > Property.id]
+  use text // commercial, residential, or mixed
+  property_type varchar(20) // predefined values
+  effective_age int
+  topography text // predefined values
+  condition text // predefined values
+  bedrooms int
+  parking_spaces int
+  occupancy text // occupied, vacant
+  land_area decimal
+  building_area decimal
+}
+
+Table Users {
+  id uuid pk
+  name text
+  phone_number text
+  identification text
+  signature text
+}
+
+Table AreaFeatures {
+  id uuid pk
+  property_id uuid [ref: > Property.id]
+  name text
+  is_present bool
+}
+
+Table Photos {
+  id uuid pk
+  property_id uuid [ref: > Property.id]
+  description varchar(100)
+  file_path varchar(255)
+  is_facade bool
+}

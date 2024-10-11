@@ -1,0 +1,80 @@
+Table Imovel {
+  id uuid pk
+  proprietario text
+  matricula text
+  endereco_id uuid [ref: > Endereco.id]
+}
+
+Table Endereco {
+  id uuid pk
+  endereco text
+  complemento text
+  bairro text
+  cidade text
+  UF text
+  cep text
+  latitude float
+  longitude float
+}
+
+Table Laudos {
+  id uuid pk
+  user_id uuid [ref: > Users.id]
+  imovel_id uuid [ref: > Imovel.id] // The property being evaluated
+  solicitante text
+  data_solicitacao date
+  data_vistoria date
+  data_laudo date
+  objetivo text
+  finalidade text
+  menor_valor decimal
+  valor_mercado decimal
+  maior_valor decimal
+  comentario_geral text
+  metodologia text
+  tratamento_dados text
+}
+
+Table Laudo_Amostra {
+  laudo_id uuid [ref: > Laudos.id]
+  amostra_imovel_id uuid [ref: > Imovel.id]
+  primary key (laudo_id, amostra_imovel_id)
+}
+
+Table detalhes_imovel {
+  id uuid pk
+  imovel_id uuid [ref: > Imovel.id]
+  uso text // comecia, residencial ou misto
+  tipo_imovel varchar(20)// 'casa', 'apartamento', 'terreno'.
+  idade_aparente int
+  topografia text
+  conservacao text
+  quartos int
+  vagas int
+  ocupacao text // ocupado, desocupado
+  area_terreno decimal
+  area_construida decimal
+}
+
+Table Users {
+  id uuid pk
+  nome text
+  telefone text
+  identificacao text
+  assinatura text
+}
+
+Table caracteristicas_regiao {
+  id uuid pk
+  imovel_id uuid [ref: > Imovel.id]
+  nome text
+  possui bool
+}
+
+Table Fotos {
+  id uuid pk
+  imovel_id uuid [ref: > Imovel.id]
+  descricao varchar(100)
+  caminho_arquivo varchar(255)
+  is_fachada bool
+}
