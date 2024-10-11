@@ -1,0 +1,67 @@
+<div class="mx-10">
+  <div class="flex flex-row justify-between items-center h-40 ">
+    <img src={~p"/images/logo.svg"} alt="Busca por Imóveis" class="w-40 max-w-xs text-primary" />
+    <div class="flex flex-row justify-around items-center w-1/2 max-w-md">
+      <.header_button href={~p"/"}>
+        HOME
+      </.header_button>
+      <.header_button href={~p"/"}>
+        PERFIL
+      </.header_button>
+      <.header_button href={~p"/"}>
+        TUTORIAL
+      </.header_button>
+      <div class="flex items-center justify-center bg-blue-100 py-1 px-3 rounded-full">
+        <.header_button href={~p"/"}>
+          ASSINE
+        </.header_button>
+      </div>
+    </div>
+  </div>
+  <div class="flex items-center justify-start flex-row">
+    <img src={~p"/images/info.svg"} alt="Busca por Imóveis" class="w-5 max-w-xs text-primary " />
+    <text class="font-bold text-primary mx-2 text-center">Informações gerais</text>
+    <hr class="bg-primary h-1 w-5/6 opacity-30 rounded-full" />
+  </div>
+  <.table
+    id="properties"
+    rows={@streams.properties}
+    row_click={fn {_id, property} -> JS.navigate(~p"/properties/#{property}") end}
+  >
+    <:col :let={{_id, property}} label="Owner"><%= property.owner %></:col>
+    <:col :let={{_id, property}} label="Registration number">
+      <%= property.registration_number %>
+    </:col>
+    <:col :let={{_id, property}} label="Address"><%= property.address_id %></:col>
+    <:action :let={{_id, property}}>
+      <div class="sr-only">
+        <.link navigate={~p"/properties/#{property}"}>Show</.link>
+      </div>
+      <.link patch={~p"/properties/#{property}/edit"}>Edit</.link>
+    </:action>
+    <:action :let={{id, property}}>
+      <.link
+        phx-click={JS.push("delete", value: %{id: property.id}) |> hide("##{id}")}
+        data-confirm="Are you sure?"
+      >
+        Delete
+      </.link>
+    </:action>
+  </.table>
+
+  <.modal
+    :if={@live_action in [:new, :edit]}
+    id="property-modal"
+    show
+    on_cancel={JS.patch(~p"/properties")}
+  >
+    <.live_component
+      module={AvalieTechWeb.PropertyLive.FormComponent}
+      id={@property.id || :new}
+      title={@page_title}
+      action={@live_action}
+      property={@property}
+      patch={~p"/properties"}
+    />
+  </.modal>
+</div>
