@@ -369,8 +369,8 @@ defmodule AvalieTechWeb.CoreComponents do
   # All other inputs text, datetime-local, url, password, etc. are handled here...
   def input(assigns) do
     ~H"""
-    <div class="flex items-center space-x-4">
-      <.label for={@id} class="w-32"><%= @label %></.label>
+    <div class="flex items-center">
+      <.label for={@id} class="w-32 pr-1"><%= @label %></.label>
       <input
         type={@type}
         name={@name}
@@ -397,7 +397,7 @@ defmodule AvalieTechWeb.CoreComponents do
 
   def label(assigns) do
     ~H"""
-    <label for={@for} class={["block text-sm font-semibold leading-6 text-primary mr-10", @class]}>
+    <label for={@for} class={["block text-sm font-semibold leading-6 text-primary", @class]}>
       <%= render_slot(@inner_block) %>
     </label>
     """

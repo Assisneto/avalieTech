@@ -26,15 +26,91 @@
   <div class="flex flex-row justify-between bg-primary-light mt-4 rounded px-2">
     <div class="w-1/2">
       <.simple_form for={@form} id="property-form" phx-submit="save">
-        <.input field={@form[:owner]} type="text" label="Proprietário" />
-        <.input field={@form[:registration_number]} type="text" label="Matrícula" />
+        <.input
+          field={@form[:owner]}
+          type="text"
+          label="Proprietário:"
+          required
+          placeholder="Nome do proprietário"
+        />
+        <.input
+          field={@form[:registration_number]}
+          type="text"
+          label="Matrícula:"
+          required
+          placeholder="Número da matrícula"
+        />
 
         <.inputs_for :let={address_form} field={@form[:address]}>
-          <.input field={address_form[:street_address]} type="text" label="Endereço" />
-          <.input field={address_form[:city]} type="text" label="Cidade" />
-          <.input field={address_form[:state]} type="text" label="Estado" />
-          <.input field={address_form[:postal_code]} type="text" label="CEP" />
-          <!-- Add other address fields as needed -->
+          <div class="flex flex-row space-x-2">
+            <div class="flex-1">
+              <.input
+                field={address_form[:postal_code]}
+                type="text"
+                label="CEP:"
+                maxlength="8"
+                pattern="\d{8}"
+                title="Digite apenas 8 números"
+                placeholder="Ex: 01001000"
+                required
+              />
+            </div>
+            <div class="w-2/5">
+              <.input
+                field={address_form[:state]}
+                type="text"
+                label="UF:"
+                maxlength="2"
+                pattern="[A-Za-z]{2}"
+                title="Digite apenas 2 letras"
+                placeholder="Ex: SP"
+                required
+              />
+            </div>
+          </div>
+          <div class="flex flex-row space-x-2">
+            <div class="flex-1">
+              <.input
+                field={address_form[:street_address]}
+                type="text"
+                label="Endereço:"
+                placeholder="Rua, Avenida, etc."
+                required
+              />
+            </div>
+            <div class="w-2/5">
+              <.input
+                field={address_form[:house_number]}
+                type="text"
+                label="Número:"
+                placeholder="123"
+                required
+                pattern="\d+"
+                title="Digite apenas números"
+              />
+            </div>
+          </div>
+
+          <.input
+            field={address_form[:complement]}
+            type="text"
+            label="Complemento:"
+            placeholder="Apto, Bloco, etc."
+          />
+          <.input
+            field={address_form[:neighborhood]}
+            type="text"
+            label="Bairro:"
+            required
+            placeholder="Nome do bairro"
+          />
+          <.input
+            field={address_form[:city]}
+            type="text"
+            label="Cidade:"
+            required
+            placeholder="Nome da cidade"
+          />
         </.inputs_for>
 
         <:actions>

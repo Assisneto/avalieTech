@@ -18,8 +18,6 @@ defmodule AvalieTechWeb.PropertyLive.Index do
       socket
       |> assign(:form, to_form(changeset))
 
-    IO.inspect(socket.assigns.form, label: "Form Changeset")
-
     {:ok, stream(socket, :properties, Appraisal.list_properties())}
   end
 
@@ -69,7 +67,7 @@ defmodule AvalieTechWeb.PropertyLive.Index do
         {:noreply,
          socket
          |> put_flash(:info, "Property created successfully")
-         |> push_patch(to: socket.assigns.patch)}
+         |> assign(:property, nil)}
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, form: to_form(changeset))}
