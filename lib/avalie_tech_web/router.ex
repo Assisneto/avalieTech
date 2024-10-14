@@ -56,7 +56,6 @@ defmodule AvalieTechWeb.Router do
       live "/users/log_in", UserLoginLive, :new
       live "/users/reset_password", UserForgotPasswordLive, :new
       live "/users/reset_password/:token", UserResetPasswordLive, :edit
-      live "/properties", PropertyLive.Index, :index
       live "/properties/new", PropertyLive.Index, :new
       live "/properties/:id/edit", PropertyLive.Index, :edit
 
@@ -86,6 +85,7 @@ defmodule AvalieTechWeb.Router do
       on_mount: [{AvalieTechWeb.UserAuth, :mount_current_user}] do
       live "/users/confirm/:token", UserConfirmationLive, :edit
       live "/users/confirm", UserConfirmationInstructionsLive, :new
+      live "/properties", PropertyLive.Index, :index
     end
   end
 end
