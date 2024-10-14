@@ -1,0 +1,50 @@
+<div class="mx-10">
+  <div class="flex flex-row justify-between items-center h-40 ">
+    <img src={~p"/images/logo.svg"} alt="Busca por Imóveis" class="w-40 max-w-xs text-primary" />
+    <div class="flex flex-row justify-between items-center w-1/2 max-w-md">
+      <.header_button href={~p"/"}>
+        HOME
+      </.header_button>
+      <.header_button href={~p"/"}>
+        PERFIL
+      </.header_button>
+      <.header_button href={~p"/"}>
+        TUTORIAL
+      </.header_button>
+      <div class="flex items-center justify-center bg-blue-100 py-1 px-3 rounded-full">
+        <.header_button href={~p"/"}>
+          ASSINE
+        </.header_button>
+      </div>
+    </div>
+  </div>
+  <div class="flex items-center justify-start flex-row">
+    <img src={~p"/images/info.svg"} alt="Busca por Imóveis" class="w-5 max-w-xs text-primary " />
+    <text class="font-bold text-primary mx-2 text-center text-nowrap">Informações gerais</text>
+    <hr class="bg-primary h-1 w-full opacity-30 rounded-full" />
+  </div>
+  <div class="flex flex-row justify-between bg-primary-light mt-4 rounded px-2">
+    <div class="w-1/2">
+      <.simple_form for={@form} id="property-form" phx-submit="save">
+        <.input field={@form[:owner]} type="text" label="Proprietário" />
+        <.input field={@form[:registration_number]} type="text" label="Matrícula" />
+
+        <.inputs_for :let={address_form} field={@form[:address]}>
+          <.input field={address_form[:street_address]} type="text" label="Endereço" />
+          <.input field={address_form[:city]} type="text" label="Cidade" />
+          <.input field={address_form[:state]} type="text" label="Estado" />
+          <.input field={address_form[:postal_code]} type="text" label="CEP" />
+          <!-- Add other address fields as needed -->
+        </.inputs_for>
+
+        <:actions>
+          <.button phx-disable-with="Saving...">Save Property</.button>
+        </:actions>
+      </.simple_form>
+    </div>
+
+    <div class="w-1/2">
+      <text>123123</text>
+    </div>
+  </div>
+</div>

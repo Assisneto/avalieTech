@@ -56,6 +56,12 @@ defmodule AvalieTechWeb.Router do
       live "/users/log_in", UserLoginLive, :new
       live "/users/reset_password", UserForgotPasswordLive, :new
       live "/users/reset_password/:token", UserResetPasswordLive, :edit
+      live "/properties", PropertyLive.Index, :index
+      live "/properties/new", PropertyLive.Index, :new
+      live "/properties/:id/edit", PropertyLive.Index, :edit
+
+      live "/properties/:id", PropertyLive.Show, :show
+      live "/properties/:id/show/edit", PropertyLive.Show, :edit
     end
 
     post "/users/log_in", UserSessionController, :create

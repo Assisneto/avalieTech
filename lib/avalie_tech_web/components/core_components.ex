@@ -202,9 +202,9 @@ defmodule AvalieTechWeb.CoreComponents do
   def simple_form(assigns) do
     ~H"""
     <.form :let={f} for={@for} as={@as} {@rest}>
-      <div class="mt-10 space-y-8 bg-white">
+      <div class="mt-10 space-y-1">
         <%= render_slot(@inner_block, f) %>
-        <div :for={action <- @actions} class="mt-2 flex items-center justify-between gap-6">
+        <div :for={action <- @actions} class="flex items-center justify-between gap-6">
           <%= render_slot(action, f) %>
         </div>
       </div>
@@ -369,15 +369,15 @@ defmodule AvalieTechWeb.CoreComponents do
   # All other inputs text, datetime-local, url, password, etc. are handled here...
   def input(assigns) do
     ~H"""
-    <div>
-      <.label for={@id}><%= @label %></.label>
+    <div class="flex items-center space-x-4">
+      <.label for={@id} class="w-32"><%= @label %></.label>
       <input
         type={@type}
         name={@name}
         id={@id}
         value={Phoenix.HTML.Form.normalize_value(@type, @value)}
         class={[
-          "mt-2 block w-full rounded-lg text-zinc-900 focus:ring-0 sm:text-sm sm:leading-6",
+          "flex-1 rounded-full text-primary-dark focus:ring-0 sm:text-sm sm:leading-6",
           @errors == [] && "border-zinc-300 focus:border-zinc-400",
           @errors != [] && "border-rose-400 focus:border-rose-400"
         ]}
@@ -392,11 +392,12 @@ defmodule AvalieTechWeb.CoreComponents do
   Renders a label.
   """
   attr :for, :string, default: nil
+  attr :class, :string, default: nil
   slot :inner_block, required: true
 
   def label(assigns) do
     ~H"""
-    <label for={@for} class="block text-sm font-semibold leading-6 text-zinc-800">
+    <label for={@for} class={["block text-sm font-semibold leading-6 text-primary mr-10", @class]}>
       <%= render_slot(@inner_block) %>
     </label>
     """
@@ -567,6 +568,14 @@ defmodule AvalieTechWeb.CoreComponents do
         <%= render_slot(@inner_block) %>
       </.link>
     </div>
+    """
+  end
+
+  def header_button(assigns) do
+    ~H"""
+    <.link href={@href} class="text-primary font-bold text-xs">
+      <%= render_slot(@inner_block) %>
+    </.link>
     """
   end
 
