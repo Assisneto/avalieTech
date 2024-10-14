@@ -4,6 +4,7 @@ defmodule AvalieTech.Appraisal.Property do
 
   alias AvalieTech.Appraisal.Address
 
+  @primary_key {:id, Ecto.UUID, autogenerate: true}
   schema "properties" do
     field :owner, :string
     field :registration_number, :string
