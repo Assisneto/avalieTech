@@ -2,125 +2,186 @@
   <div class="flex flex-row justify-between items-center h-40 ">
     <img src={~p"/images/logo.svg"} alt="Busca por Imóveis" class="w-40 max-w-xs text-primary" />
     <div class="flex flex-row justify-between items-center w-1/2 max-w-md">
-      <.header_button href={~p"/"}>
-        HOME
-      </.header_button>
-      <.header_button href={~p"/"}>
-        PERFIL
-      </.header_button>
-      <.header_button href={~p"/"}>
-        TUTORIAL
-      </.header_button>
+      <.header_button href={~p"/"}>HOME</.header_button>
+      <.header_button href={~p"/"}>PERFIL</.header_button>
+      <.header_button href={~p"/"}>TUTORIAL</.header_button>
       <div class="flex items-center justify-center bg-blue-100 py-1 px-3 rounded-full">
-        <.header_button href={~p"/"}>
-          ASSINE
-        </.header_button>
+        <.header_button href={~p"/"}>ASSINE</.header_button>
       </div>
     </div>
   </div>
+
   <div class="flex items-center justify-start flex-row">
     <img src={~p"/images/info.svg"} alt="Busca por Imóveis" class="w-5 max-w-xs text-primary " />
-    <text class="font-bold text-primary mx-2 text-center text-nowrap">Informações gerais</text>
+    <span class="font-bold text-primary mx-2 text-center whitespace-nowrap">
+      Informações gerais
+    </span>
     <hr class="bg-primary h-1 w-full opacity-30 rounded-full" />
   </div>
   <div class="flex flex-row justify-between bg-primary-light mt-4 rounded px-2">
-    <div class="w-1/2">
-      <.simple_form for={@form} id="property-form" phx-submit="save">
-        <.input
-          field={@form[:owner]}
-          type="text"
-          label="Proprietário:"
-          required
-          placeholder="Nome do proprietário"
-        />
-        <.input
-          field={@form[:registration_number]}
-          type="text"
-          label="Matrícula:"
-          required
-          placeholder="Número da matrícula"
-        />
-
-        <.inputs_for :let={address_form} field={@form[:address]}>
-          <div class="flex flex-row space-x-2">
-            <div class="flex-1">
-              <.input
-                field={address_form[:postal_code]}
-                type="text"
-                label="CEP:"
-                maxlength="8"
-                pattern="\d{8}"
-                title="Digite apenas 8 números"
-                placeholder="Ex: 01001000"
-                required
-              />
-            </div>
-            <div class="w-2/5">
-              <.input
-                field={address_form[:state]}
-                type="text"
-                label="UF:"
-                maxlength="2"
-                pattern="[A-Za-z]{2}"
-                title="Digite apenas 2 letras"
-                placeholder="Ex: SP"
-                required
-              />
-            </div>
-          </div>
-          <div class="flex flex-row space-x-2">
-            <div class="flex-1">
-              <.input
-                field={address_form[:street_address]}
-                type="text"
-                label="Endereço:"
-                placeholder="Rua, Avenida, etc."
-                required
-              />
-            </div>
-            <div class="w-2/5">
-              <.input
-                field={address_form[:house_number]}
-                type="text"
-                label="Número:"
-                placeholder="123"
-                required
-                pattern="\d+"
-                title="Digite apenas números"
-              />
-            </div>
-          </div>
+    <.simple_form for={@form} id="property-form" phx-submit="save" class="w-full">
+      <div class="flex flex-row">
+        <div class="w-1/2 pr-2">
+          <.inputs_for :let={appraisal_report} field={@form[:appraisal_reports]}>
+            <.input
+              field={appraisal_report[:requester]}
+              type="text"
+              label="Solicitante:"
+              placeholder="Nome do solicitante"
+            />
+          </.inputs_for>
 
           <.input
-            field={address_form[:complement]}
+            field={@form[:owner]}
             type="text"
-            label="Complemento:"
-            placeholder="Apto, Bloco, etc."
-          />
-          <.input
-            field={address_form[:neighborhood]}
-            type="text"
-            label="Bairro:"
+            label="Proprietário:"
             required
-            placeholder="Nome do bairro"
+            placeholder="Nome do proprietário"
           />
+
           <.input
-            field={address_form[:city]}
+            field={@form[:registration_number]}
             type="text"
-            label="Cidade:"
+            label="Matrícula:"
             required
-            placeholder="Nome da cidade"
+            placeholder="Número da matrícula"
           />
-        </.inputs_for>
 
-        <:actions>
-          <.button phx-disable-with="Saving...">Save Property</.button>
-        </:actions>
-      </.simple_form>
-    </div>
+          <.inputs_for :let={address_form} field={@form[:address]}>
+            <div class="flex flex-row space-x-2">
+              <div class="flex-1">
+                <.input
+                  field={address_form[:postal_code]}
+                  type="text"
+                  label="CEP:"
+                  maxlength="8"
+                  pattern="\d{8}"
+                  title="Digite apenas 8 números"
+                  placeholder="Ex: 01001000"
+                  required
+                />
+              </div>
+              <div class="w-2/5">
+                <.input
+                  field={address_form[:state]}
+                  type="text"
+                  label="UF:"
+                  maxlength="2"
+                  pattern="[A-Za-z]{2}"
+                  title="Digite apenas 2 letras"
+                  placeholder="Ex: SP"
+                  required
+                />
+              </div>
+            </div>
+            <div class="flex flex-row space-x-2">
+              <div class="flex-1">
+                <.input
+                  field={address_form[:street_address]}
+                  type="text"
+                  label="Endereço:"
+                  placeholder="Rua, Avenida, etc."
+                  required
+                />
+              </div>
+              <div class="w-2/5">
+                <.input
+                  field={address_form[:house_number]}
+                  type="text"
+                  label="Número:"
+                  placeholder="123"
+                  required
+                  pattern="\d+"
+                  title="Digite apenas números"
+                />
+              </div>
+            </div>
 
-    <div class="w-1/2">
-      <text>123123</text>
-    </div>
+            <.input
+              field={address_form[:complement]}
+              type="text"
+              label="Complemento:"
+              placeholder="Apto, Bloco, etc."
+            />
+
+            <.input
+              field={address_form[:neighborhood]}
+              type="text"
+              label="Bairro:"
+              required
+              placeholder="Nome do bairro"
+            />
+
+            <.input
+              field={address_form[:city]}
+              type="text"
+              label="Cidade:"
+              required
+              placeholder="Nome da cidade"
+            />
+          </.inputs_for>
+
+          <.inputs_for :let={appraisal_report} field={@form[:appraisal_reports]}>
+            <.input
+              field={appraisal_report[:methodology]}
+              type="text"
+              label="Metodologia:"
+              required
+            />
+          </.inputs_for>
+        </div>
+
+        <div class="w-1/2 pl-2">
+          <.inputs_for :let={appraisal_report} field={@form[:appraisal_reports]}>
+            <.input
+              field={appraisal_report[:request_date]}
+              type="date"
+              label="Data de Solicitação:"
+              required
+            />
+
+            <.input
+              field={appraisal_report[:inspection_date]}
+              type="date"
+              label="Data de Vistoria:"
+              required
+            />
+
+            <.input
+              field={appraisal_report[:report_date]}
+              type="date"
+              label="Data do Relatório:"
+              required
+            />
+
+            <.input
+              field={appraisal_report[:objective]}
+              type="text"
+              label="Objetivo:"
+              placeholder="Descreva o objetivo"
+              required
+            />
+
+            <.input
+              field={appraisal_report[:intended_use]}
+              type="text"
+              label="Finalidade:"
+              placeholder="Descreva o uso pretendido"
+              required
+            />
+
+            <.input
+              field={appraisal_report[:data_processing]}
+              type="text"
+              label="Trat de Dados:"
+              placeholder="Descreva o processamento de dados"
+            />
+          </.inputs_for>
+        </div>
+      </div>
+      <:actions class="flex justify-end mt-4">
+        <.button phx-disable-with="Saving...">Gerar Avaliação</.button>
+      </:actions>
+    </.simple_form>
   </div>
 </div>

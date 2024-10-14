@@ -2,50 +2,31 @@ defmodule AvalieTechWeb.PropertyLive.Index do
   use AvalieTechWeb, :live_view
 
   alias AvalieTech.Appraisal
-  alias AvalieTech.Appraisal.Property
+  alias AvalieTech.Appraisal.{Property, AppraisalReport}
   alias AvalieTech.Appraisal.Address
-  alias AvalieTech.Repo
 
   @impl true
   def mount(_params, _session, socket) do
-    # Initialize with an empty changeset
     changeset =
       Property.changeset(%Property{
-        address: %Address{}
+        address: %Address{},
+        appraisal_reports: [
+          %AppraisalReport{
+            methodology: "Método comparativo direto de dados de marcado"
+          }
+        ]
       })
 
     socket =
       socket
       |> assign(:form, to_form(changeset))
 
-    {:ok, stream(socket, :properties, Appraisal.list_properties())}
+    {:ok, socket}
   end
 
   @impl true
   def handle_params(params, _url, socket) do
     {:noreply, apply_action(socket, socket.assigns.live_action, params)}
-  end
-
-  defp apply_action(socket, :new, _params) do
-    changeset =
-      Property.changeset(%Property{
-        address: %Address{}
-      })
-
-    socket
-    |> assign(:page_title, "New Property")
-    |> assign(:property, %Property{})
-    |> assign(:form, to_form(changeset))
-  end
-
-  defp apply_action(socket, :edit, %{"id" => id}) do
-    property = Appraisal.get_property!(id) |> Repo.preload(:address)
-    changeset = Property.changeset(property)
-
-    socket
-    |> assign(:page_title, "Edit Property")
-    |> assign(:property, property)
-    |> assign(:form, to_form(changeset))
   end
 
   defp apply_action(socket, :index, _params) do
@@ -60,14 +41,24 @@ defmodule AvalieTechWeb.PropertyLive.Index do
   end
 
   defp save_property(socket, property_params) do
-    case Appraisal.create_property(property_params) do
-      {:ok, property} ->
-        {:noreply, stream_insert(socket, :properties, property)}
+    user_id = socket.assigns.current_user.id
 
+    appraisal_reports = Map.get(property_params, "appraisal_reports", %{})
+
+    updated_appraisal_reports =
+      appraisal_reports
+      |> Enum.map(fn {_, report} ->
+        Map.put(report, "user_id", user_id)
+      end)
+
+    updated_property_params =
+      Map.put(property_params, "appraisal_reports", updated_appraisal_reports)
+
+    case Appraisal.create_property(updated_property_params) do
+      {:ok, _property} ->
         {:noreply,
          socket
-         |> put_flash(:info, "Property created successfully")
-         |> assign(:property, nil)}
+         |> put_flash(:info, "Property created successfully")}
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, form: to_form(changeset))}
