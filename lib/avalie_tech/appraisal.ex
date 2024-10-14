@@ -6,7 +6,7 @@ defmodule AvalieTech.Appraisal do
   import Ecto.Query, warn: false
   alias AvalieTech.Repo
 
-  alias AvalieTech.Appraisal.Property
+  alias AvalieTech.Appraisal.{Property, AppraisalReport, Address}
 
   @doc """
   Returns the list of properties.
@@ -102,8 +102,6 @@ defmodule AvalieTech.Appraisal do
     Property.changeset(property, attrs)
   end
 
-  alias AvalieTech.Appraisal.Address
-
   @doc """
   Returns the list of addresses.
 
@@ -197,4 +195,69 @@ defmodule AvalieTech.Appraisal do
   def change_address(%Address{} = address, attrs \\ %{}) do
     Address.changeset(address, attrs)
   end
+
+  @doc """
+  Lista todos os relatórios de avaliação.
+  """
+  def list_appraisal_reports do
+    Repo.all(AppraisalReport)
+    |> Repo.preload([:user, :property])
+  end
+
+  @doc """
+  Obtém um único relatório de avaliação.
+
+  Falha se o relatório não for encontrado.
+  """
+  def get_appraisal_report!(id),
+    do: Repo.get!(AppraisalReport, id) |> Repo.preload([:user, :property])
+
+  @doc """
+  Cria um relatório de avaliação.
+  """
+  def create_appraisal_report(attrs \\ %{}) do
+    %AppraisalReport{}
+    |> AppraisalReport.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Atualiza um relatório de avaliação.
+  """
+  def update_appraisal_report(%AppraisalReport{} = appraisal_report, attrs) do
+    appraisal_report
+    |> AppraisalReport.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deleta um relatório de avaliação.
+  """
+  def delete_appraisal_report(%AppraisalReport{} = appraisal_report) do
+    Repo.delete(appraisal_report)
+  end
+
+  @doc """
+  Retorna um changeset para o relatório de avaliação.
+  """
+  def change_appraisal_report(%AppraisalReport{} = appraisal_report) do
+    AppraisalReport.changeset(appraisal_report, %{})
+  end
+
+  # def create_property_with_report(attrs \\ %{}) do
+  #   Multi.new()
+  #   |> Multi.insert(:property, Property.changeset(%Property{}, attrs))
+  #   |> Multi.run(:appraisal_report, fn repo, %{property: property} ->
+  #     report_attrs = %{
+  #       user_id: attrs[:user_id],
+  #       property_id: property.id,
+  #       requester: attrs[:requester] || "Default Requester",
+  #       request_date: attrs[:request_date] || Date.utc_today()
+  #     }
+
+  #     AppraisalReport.changeset(%AppraisalReport{}, report_attrs)
+  #     |> repo.insert()
+  #   end)
+  #   |> Repo.transaction()
+  # end
 end
