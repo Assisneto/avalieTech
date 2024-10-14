@@ -5,7 +5,6 @@ defmodule AvalieTech.Repo.Migrations.CreateProperties do
     create table(:properties) do
       add :owner, :string
       add :registration_number, :string
-      add :address_id, :uuid
 
       timestamps(type: :utc_datetime)
     end

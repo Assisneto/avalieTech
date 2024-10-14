@@ -2,6 +2,8 @@ defmodule AvalieTech.Appraisal.Address do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias AvalieTech.Appraisal.Property
+
   schema "addresses" do
     field :state, :string
     field :street_address, :string
@@ -12,13 +14,24 @@ defmodule AvalieTech.Appraisal.Address do
     field :latitude, :float
     field :longitude, :float
 
+    belongs_to :property, Property
+
     timestamps(type: :utc_datetime)
   end
 
   @doc false
   def changeset(address, attrs) do
     address
-    |> cast(attrs, [:street_address, :complement, :neighborhood, :city, :state, :postal_code, :latitude, :longitude])
-    |> validate_required([:street_address, :complement, :neighborhood, :city, :state, :postal_code, :latitude, :longitude])
+    |> cast(attrs, [
+      :street_address,
+      :complement,
+      :neighborhood,
+      :city,
+      :state,
+      :postal_code,
+      :latitude,
+      :longitude
+    ])
+    |> validate_required([:street_address, :city, :state, :postal_code])
   end
 end
