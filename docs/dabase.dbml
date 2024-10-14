@@ -1,32 +1,52 @@
-Table Property {
-  id uuid pk
-  owner text
-  registration_number text
-  address_id uuid [ref: > Address.id]
+Table users {
+  id uuid [pk]
+  email citext [unique, not null]
+  hashed_password string [not null]
+  confirmed_at utc_datetime
+  created_at utc_datetime
+  updated_at utc_datetime
 }
 
-Table Address {
-  id uuid pk
-  street_address text
-  complement text
-  neighborhood text
-  city text
-  state text
-  postal_code text
+Table users_tokens {
+  user_id uuid [ref: > users.id, not null]
+  token binary [not null]
+  context string [not null]
+  sent_to string
+  created_at utc_datetime
+}
+
+Table properties {
+  id uuid [pk]
+  owner string
+  registration_number string
+  created_at utc_datetime
+  updated_at utc_datetime
+}
+
+Table addresses {
+  id uuid [pk]
+  street_address string
+  complement string
+  neighborhood string
+  house_number string [not null]
+  city string
+  state string
+  postal_code string
   latitude float
   longitude float
+  property_id uuid [ref: > properties.id, not null]
 }
 
-Table AppraisalReports {
-  id uuid pk
-  user_id uuid [ref: > Users.id]
-  property_id uuid [ref: > Property.id] // The property being appraised
-  requester text
+Table appraisal_reports {
+  id uuid [pk]
+  user_id uuid [ref: > users.id, not null]
+  property_id uuid [ref: > properties.id, not null]
+  requester string
   request_date date
   inspection_date date
   report_date date
-  objective text // predefined values
-  intended_use text // predefined values
+  objective string // predefined values
+  intended_use string // predefined values
   lower_value decimal
   market_value decimal
   upper_value decimal
@@ -35,45 +55,36 @@ Table AppraisalReports {
   data_processing text
 }
 
-Table AppraisalComparables {
-  appraisal_report_id uuid [ref: > AppraisalReports.id]
-  comparable_property_id uuid [ref: > Property.id]
-  primary key (appraisal_report_id, comparable_property_id)
+Table appraisal_comparables {
+  appraisal_report_id uuid [ref: > appraisal_reports.id, not null]
+  comparable_property_id uuid [ref: > properties.id, not null]
 }
 
-Table PropertyDetails {
-  id uuid pk
-  property_id uuid [ref: > Property.id]
-  use text // commercial, residential, or mixed
+Table property_details {
+  id uuid [pk]
+  property_id uuid [ref: > properties.id, not null]
+  use string // commercial, residential, or mixed
   property_type varchar(20) // predefined values
   effective_age int
-  topography text // predefined values
-  condition text // predefined values
+  topography string // predefined values
+  condition string // predefined values
   bedrooms int
   parking_spaces int
-  occupancy text // occupied, vacant
+  occupancy string // occupied, vacant
   land_area decimal
   building_area decimal
 }
 
-Table Users {
-  id uuid pk
-  name text
-  phone_number text
-  identification text
-  signature text
-}
-
-Table AreaFeatures {
-  id uuid pk
-  property_id uuid [ref: > Property.id]
-  name text
+Table area_features {
+  id uuid [pk]
+  property_id uuid [ref: > properties.id, not null]
+  name string
   is_present bool
 }
 
-Table Photos {
-  id uuid pk
-  property_id uuid [ref: > Property.id]
+Table photos {
+  id uuid [pk]
+  property_id uuid [ref: > properties.id, not null]
   description varchar(100)
   file_path varchar(255)
   is_facade bool
