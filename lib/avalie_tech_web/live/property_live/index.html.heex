@@ -1,7 +1,7 @@
 <div class="mx-10">
   <div class="flex flex-row justify-between items-center h-40 ">
     <img src={~p"/images/logo.svg"} alt="Busca por Imóveis" class="w-40 max-w-xs text-primary" />
-    <div class="flex flex-row justify-around items-center w-1/2 max-w-md">
+    <div class="flex flex-row justify-between items-center w-1/2 max-w-md">
       <.header_button href={~p"/"}>
         HOME
       </.header_button>
@@ -20,48 +20,31 @@
   </div>
   <div class="flex items-center justify-start flex-row">
     <img src={~p"/images/info.svg"} alt="Busca por Imóveis" class="w-5 max-w-xs text-primary " />
-    <text class="font-bold text-primary mx-2 text-center">Informações gerais</text>
-    <hr class="bg-primary h-1 w-5/6 opacity-30 rounded-full" />
+    <text class="font-bold text-primary mx-2 text-center text-nowrap">Informações gerais</text>
+    <hr class="bg-primary h-1 w-full opacity-30 rounded-full" />
   </div>
-  <.table
-    id="properties"
-    rows={@streams.properties}
-    row_click={fn {_id, property} -> JS.navigate(~p"/properties/#{property}") end}
-  >
-    <:col :let={{_id, property}} label="Owner"><%= property.owner %></:col>
-    <:col :let={{_id, property}} label="Registration number">
-      <%= property.registration_number %>
-    </:col>
-    <:col :let={{_id, property}} label="Address"><%= property.address_id %></:col>
-    <:action :let={{_id, property}}>
-      <div class="sr-only">
-        <.link navigate={~p"/properties/#{property}"}>Show</.link>
-      </div>
-      <.link patch={~p"/properties/#{property}/edit"}>Edit</.link>
-    </:action>
-    <:action :let={{id, property}}>
-      <.link
-        phx-click={JS.push("delete", value: %{id: property.id}) |> hide("##{id}")}
-        data-confirm="Are you sure?"
-      >
-        Delete
-      </.link>
-    </:action>
-  </.table>
+  <div class="flex flex-row justify-between bg-primary-light mt-4 rounded px-2">
+    <div class="w-1/2">
+      <.simple_form for={@form} id="property-form" phx-submit="save">
+        <.input field={@form[:owner]} type="text" label="Proprietário" />
+        <.input field={@form[:registration_number]} type="text" label="Matrícula" />
 
-  <.modal
-    :if={@live_action in [:new, :edit]}
-    id="property-modal"
-    show
-    on_cancel={JS.patch(~p"/properties")}
-  >
-    <.live_component
-      module={AvalieTechWeb.PropertyLive.FormComponent}
-      id={@property.id || :new}
-      title={@page_title}
-      action={@live_action}
-      property={@property}
-      patch={~p"/properties"}
-    />
-  </.modal>
+        <.inputs_for :let={address_form} field={@form[:address]}>
+          <.input field={address_form[:street_address]} type="text" label="Endereço" />
+          <.input field={address_form[:city]} type="text" label="Cidade" />
+          <.input field={address_form[:state]} type="text" label="Estado" />
+          <.input field={address_form[:postal_code]} type="text" label="CEP" />
+          <!-- Add other address fields as needed -->
+        </.inputs_for>
+
+        <:actions>
+          <.button phx-disable-with="Saving...">Save Property</.button>
+        </:actions>
+      </.simple_form>
+    </div>
+
+    <div class="w-1/2">
+      <text>123123</text>
+    </div>
+  </div>
 </div>
