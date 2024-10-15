@@ -11,14 +11,8 @@
     </div>
   </div>
 
-  <div class="flex items-center justify-start flex-row">
-    <img src={~p"/images/info.svg"} alt="Busca por Imóveis" class="w-5 max-w-xs text-primary " />
-    <span class="font-bold text-primary mx-2 text-center whitespace-nowrap">
-      Informações gerais
-    </span>
-    <hr class="bg-primary h-1 w-full opacity-30 rounded-full" />
-  </div>
-  <div class="flex flex-row justify-between bg-primary-light mt-4 rounded px-2">
+  <.info_component svg_path="/images/info.svg" text="Informações gerais" />
+  <div class="flex flex-row justify-between bg-primary-light rounded-2xl px-2">
     <.simple_form for={@form} id="property-form" phx-submit="save" class="w-full">
       <div class="flex flex-row">
         <div class="w-1/2 pr-2">
