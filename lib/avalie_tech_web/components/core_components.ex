@@ -202,7 +202,7 @@ defmodule AvalieTechWeb.CoreComponents do
   def simple_form(assigns) do
     ~H"""
     <.form :let={f} for={@for} as={@as} {@rest}>
-      <div class="mt-10 space-y-1">
+      <div class="mt-2 space-y-1">
         <%= render_slot(@inner_block, f) %>
         <div :for={action <- @actions} class="flex items-center justify-between gap-6">
           <%= render_slot(action, f) %>
@@ -377,7 +377,7 @@ defmodule AvalieTechWeb.CoreComponents do
         id={@id}
         value={Phoenix.HTML.Form.normalize_value(@type, @value)}
         class={[
-          "flex-1 rounded-full focus:text-primary-dark font-bold text-primary focus:ring-0 sm:text-sm sm:leading-6",
+          "flex-1 rounded-full focus:text-primary-light placeholder-primary-light font-bold text-primary focus:ring-0 sm:text-sm sm:leading-6",
           @errors == [] && "border-zinc-300 focus:border-zinc-400",
           @errors != [] && "border-rose-400 focus:border-rose-400"
         ]}
@@ -653,6 +653,33 @@ defmodule AvalieTechWeb.CoreComponents do
     |> JS.hide(to: "##{id}", transition: {"block", "block", "hidden"})
     |> JS.remove_class("overflow-hidden", to: "body")
     |> JS.pop_focus()
+  end
+
+  @doc """
+  Renders a general information component.
+
+  ## Attributes
+
+    * `:svg_path` - Path to the SVG icon.
+    * `:text` - Text to be displayed next to the icon.
+
+  ## Example
+
+      <.info_component svg_path="/images/info.svg" text="Informações gerais" />
+  """
+  attr :svg_path, :string, default: "/images/info.svg", doc: "Path to the SVG icon"
+  attr :text, :string, default: "Informações gerais", doc: "Text to display next to the icon"
+
+  def info_component(assigns) do
+    ~H"""
+    <div class="flex items-center justify-start flex-row">
+      <img src={@svg_path} alt={@text} class="w-5 max-w-xs text-primary" />
+      <span class="font-bold text-primary mx-2 text-center whitespace-nowrap">
+        <%= @text %>
+      </span>
+      <hr class="bg-primary h-1 w-full opacity-30 rounded-full" />
+    </div>
+    """
   end
 
   @doc """
