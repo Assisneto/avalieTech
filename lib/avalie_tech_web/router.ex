@@ -18,20 +18,6 @@ defmodule AvalieTechWeb.Router do
   end
 
   scope "/", AvalieTechWeb do
-    pipe_through :browser
-
-    live "/", LandingLive
-  end
-
-  # Other scopes may use custom stacks.
-  # scope "/api", AvalieTechWeb do
-  #   pipe_through :api
-  # end
-
-
-      live_dashboard "/dashboard", metrics: AvalieTechWeb.Telemetry
-      forward "/mailbox", Plug.Swoosh.MailboxPreview
-    end
   end
 
   ## Authentication routes
@@ -47,7 +33,7 @@ defmodule AvalieTechWeb.Router do
       live "/users/reset_password/:token", UserResetPasswordLive, :edit
       live "/properties/new", PropertyLive.Index, :new
       live "/properties/:id/edit", PropertyLive.Index, :edit
-
+      live "/", LandingLive
       live "/properties/:id", PropertyLive.Show, :show
       live "/properties/:id/show/edit", PropertyLive.Show, :edit
     end
@@ -62,6 +48,8 @@ defmodule AvalieTechWeb.Router do
       on_mount: [{AvalieTechWeb.UserAuth, :ensure_authenticated}] do
       live "/users/settings", UserSettingsLive, :edit
       live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
+      live "/properties", PropertyLive.Index, :index
+      live "/home", HomeLive.Index, :index
     end
   end
 
@@ -74,7 +62,6 @@ defmodule AvalieTechWeb.Router do
       on_mount: [{AvalieTechWeb.UserAuth, :mount_current_user}] do
       live "/users/confirm/:token", UserConfirmationLive, :edit
       live "/users/confirm", UserConfirmationInstructionsLive, :new
-      live "/properties", PropertyLive.Index, :index
     end
   end
 end
