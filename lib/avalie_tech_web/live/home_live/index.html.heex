@@ -1,0 +1,30 @@
+<div class="mx-10">
+  <div class="flex flex-row justify-between items-center h-40 ">
+    <img src={~p"/images/logo.svg"} alt="Busca por Imóveis" class="w-40 max-w-xs text-primary" />
+    <div class="flex flex-row justify-between items-center w-1/2 max-w-md">
+      <.header_button href={~p"/"}>HOME</.header_button>
+      <.header_button href={~p"/"}>PERFIL</.header_button>
+      <.header_button href={~p"/"}>TUTORIAL</.header_button>
+      <div class="flex items-center justify-center bg-blue-100 py-1 px-3 rounded-full">
+        <.header_button href={~p"/"}>ASSINE</.header_button>
+      </div>
+    </div>
+  </div>
+  <.info_component svg_path="/images/house.svg" text="Painel Geral" />
+  <div class="flex flex-row justify-between bg-primary-light rounded-2xl px-10 py-10 mt-5">
+    <div class="bg-primary p-5 rounded-2xl flex-row flex">
+      <img src="/images/plus.svg" class="max-w-xs text-primary w-12 mr-7" />
+      <.link href={~p"/properties"} class="text-white text-xl font-semibold">
+        Nova<br /> Avaliação
+      </.link>
+    </div>
+    <div class="bg-primary p-5 rounded-2xl flex-row flex">
+      <img src="/images/burger-menu.svg" class="max-w-xs text-primary w-14 mr-7" />
+      <.link class="text-white text-xl font-semibold">Minhas<br /> Avaliações</.link>
+    </div>
+    <div class="bg-primary p-5 rounded-2xl flex-row flex">
+      <img src="/images/lupa.svg" class="max-w-xs text-primary w-14 mr-4" />
+      <.link class="text-white text-xl font-semibold">Banco de <br />Pesquisa</.link>
+    </div>
+  </div>
+</div>
