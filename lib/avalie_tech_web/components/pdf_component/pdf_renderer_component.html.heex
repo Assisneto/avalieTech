@@ -33,7 +33,7 @@
 
     <div class="right-section">
       <h2 class="section-title">Relatórios de Avaliação</h2>
-      <% for report <- @property.appraisal_reports do %>
+      <%= for report <- @property.appraisal_reports do %>
         <dl>
           <dt class="label">Solicitante:</dt>
           <dd><%= report.requester %></dd>
