@@ -50,6 +50,7 @@ defmodule AvalieTechWeb.Router do
       live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
       live "/properties", PropertyLive.Index, :index
       live "/home", HomeLive.Index, :index
+      get "/generate", PdfController, :index
     end
   end
 

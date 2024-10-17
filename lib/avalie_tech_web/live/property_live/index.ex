@@ -20,6 +20,7 @@ defmodule AvalieTechWeb.PropertyLive.Index do
     socket =
       socket
       |> assign(:form, to_form(changeset))
+      |> assign(:show_invoice_link, false)
 
     {:ok, socket}
   end
@@ -55,10 +56,11 @@ defmodule AvalieTechWeb.PropertyLive.Index do
       Map.put(property_params, "appraisal_reports", updated_appraisal_reports)
 
     case Appraisal.create_property(updated_property_params) do
-      {:ok, _property} ->
+      {:ok, property} ->
         {:noreply,
          socket
-         |> put_flash(:info, "Property created successfully")}
+         |> put_flash(:info, "Property created successfully")
+         |> redirect(to: ~p"/generate?property_id=#{property.id}")}
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, form: to_form(changeset))}
