@@ -1,0 +1,63 @@
+<head>
+  <link phx-track-static rel="stylesheet" href={@css} />
+</head>
+<div class="container">
+  <div class="header">
+    <img src={@svg_path} alt="Informações gerais" class="header-icon" />
+    <span class="header-title">Informações gerais</span>
+    <hr class="header-line" />
+  </div>
+  <div class="content">
+    <div class="left-section">
+      <h2 class="section-title">Detalhes do Imóvel</h2>
+      <dl>
+        <dt class="label">Proprietário:</dt>
+        <dd><%= @property.owner %></dd>
+        <dt class="label">Matrícula:</dt>
+        <dd><%= @property.registration_number %></dd>
+        <h3 class="subsection-title">Endereço</h3>
+        <dt class="label">Rua:</dt>
+        <dd><%= @property.address.street_address %></dd>
+        <dt class="label">Número:</dt>
+        <dd><%= @property.address.house_number %></dd>
+        <dt class="label">Bairro:</dt>
+        <dd><%= @property.address.neighborhood %></dd>
+        <dt class="label">Cidade:</dt>
+        <dd><%= @property.address.city %></dd>
+        <dt class="label">Estado:</dt>
+        <dd><%= @property.address.state %></dd>
+        <dt class="label">CEP:</dt>
+        <dd><%= @property.address.postal_code %></dd>
+      </dl>
+    </div>
+
+    <div class="right-section">
+      <h2 class="section-title">Relatórios de Avaliação</h2>
+      <% for report <- @property.appraisal_reports do %>
+        <dl>
+          <dt class="label">Solicitante:</dt>
+          <dd><%= report.requester %></dd>
+          <dt class="label">Data de Solicitação:</dt>
+          <dd><%= report.request_date %></dd>
+          <dt class="label">Data de Vistoria:</dt>
+          <dd><%= report.inspection_date %></dd>
+          <dt class="label">Data do Relatório:</dt>
+          <dd><%= report.report_date %></dd>
+          <dt class="label">Objetivo:</dt>
+          <dd><%= report.objective %></dd>
+          <dt class="label">Finalidade:</dt>
+          <dd><%= report.intended_use %></dd>
+          <dt class="label">Metodologia:</dt>
+          <dd><%= report.methodology %></dd>
+          <dt class="label">Tratamento de Dados:</dt>
+          <dd><%= report.data_processing %></dd>
+        </dl>
+        <hr class="section-divider" />
+      <% end %>
+    </div>
+  </div>
+  <div>
+    <h2 class="chart-title">Gráfico de Vendas</h2>
+    <.chart />
+  </div>
+</div>

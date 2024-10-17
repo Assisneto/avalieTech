@@ -377,7 +377,7 @@ defmodule AvalieTechWeb.CoreComponents do
         id={@id}
         value={Phoenix.HTML.Form.normalize_value(@type, @value)}
         class={[
-          "flex-1 rounded-full focus:text-primary-light placeholder-primary-light font-bold text-primary focus:ring-0 sm:text-sm sm:leading-6",
+          "flex-1 rounded-full focus:text-primary placeholder-primary-light font-bold text-primary focus:ring-0 sm:text-sm sm:leading-6",
           @errors == [] && "border-zinc-300 focus:border-zinc-400",
           @errors != [] && "border-rose-400 focus:border-rose-400"
         ]}
