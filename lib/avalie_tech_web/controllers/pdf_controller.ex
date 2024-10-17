@@ -9,7 +9,7 @@ defmodule AvalieTechWeb.PdfController do
     property = Appraisal.get_property_full!(property_id)
 
     svg_url = static_url(conn, "/images/info.svg")
-    css = static_url(conn, "/css/pdf.css")
+    css = static_url(conn, "/scss/pdf.css")
 
     conn =
       assign(conn, :property, property)

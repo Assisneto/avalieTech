@@ -1,0 +1,130 @@
+.container {
+  margin: 0 40px;
+}
+/* # http://localhost:4000/generate?property_id=18b61608-4783-4cc1-9a08-4a1e12a42b87 */
+.property-evaluation {
+  font-size: 26px; /* Ajuste o tamanho conforme necessário */
+  color: #0070f3;
+  font-weight: bold;
+
+}
+
+.property-evaluation-container{
+  margin-bottom: 20px; /* Espaçamento abaixo do span */
+  margin-top: 20px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  margin-bottom: 10px;
+}
+
+.header-icon {
+  width: 30px;
+  max-width: 100%;
+  color: #0070f3;
+}
+
+/* Aumentar o tamanho da fonte de "Informações gerais" */
+.header-title {
+  font-weight: bold;
+  color: #0070f3;
+  margin: 0 10px;
+  text-align: center;
+  white-space: nowrap;
+  font-size: 18px; /* Ajuste o tamanho conforme necessário */
+}
+
+.header-line {
+  background-color: #0070f3;
+  height: 2px;
+  width: 100%;
+  opacity: 0.3;
+  border-radius: 9999px;
+  border: none;
+}
+
+/* Alterar a cor de fundo do conteúdo */
+.content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: #e0e8fb; /* Cor atualizada */
+  border-radius: 20px;
+  padding: 10px;
+}
+
+.left-section,
+.right-section {
+  width: 50%;
+}
+
+.left-section {
+  padding-right: 10px;
+}
+
+.right-section {
+  padding-left: 10px;
+}
+
+.section-title {
+  margin-top: 5px;
+  font-weight: bold;
+  color: #0070f3;
+}
+
+.subsection-title {
+  margin-top: 10px;
+  font-weight: bold;
+  color: #0070f3;
+}
+
+/* Remover display: flex e flex-wrap do dl */
+dl {
+  /* display: flex; */
+  /* flex-wrap: wrap; */
+}
+
+/* Ajustar a classe .pair para empilhar verticalmente */
+.pair {
+  display: flex;
+  align-items: center;
+  /* margin-right: 20px; */
+  margin-bottom: 10px; /* Manter o espaçamento vertical */
+  /* Opcional: adicionar flex-direction: column se precisar */
+  flex-direction: row;
+}
+
+/* Alterar a cor dos títulos */
+.label {
+  font-weight: normal; /* Tornar os rótulos com peso normal */
+  color: #3969e9;
+}
+
+
+.pair dt::after {
+  content: ":\00a0"; /* Adiciona ": " com espaço não quebrável */
+}
+
+/* Estilizar a informação após os títulos */
+dd {
+  color: #3969e9;
+  font-weight: bold;
+  margin-left: 5px;
+}
+
+/* Remover margens padrão de dt e dd */
+dt, dd {
+  margin: 0;
+}
+
+.section-divider {
+  margin: 20px 0;
+}
+
+.chart-title {
+  font-weight: bold;
+  color: #0070f3;
+}
