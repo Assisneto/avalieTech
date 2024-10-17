@@ -62,7 +62,9 @@ defmodule AvalieTech.MixProject do
       {:bandit, "~> 1.5"},
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
       {:gen_smtp, "~> 1.2"},
-      {:phoenix_swoosh, "~> 1.2.1"}
+      {:phoenix_swoosh, "~> 1.2.1"},
+      {:chromic_pdf, "~> 1.17"},
+      {:contex, "~> 0.5.0"}
     ]
   end
 
