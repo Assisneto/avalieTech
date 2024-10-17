@@ -37,6 +37,12 @@ defmodule AvalieTech.Appraisal do
   """
   def get_property!(id), do: Repo.get!(Property, id)
 
+  def get_property_full!(id) do
+    Property
+    |> Repo.get!(id)
+    |> Repo.preload([:address, :appraisal_reports])
+  end
+
   @doc """
   Creates a property.
 

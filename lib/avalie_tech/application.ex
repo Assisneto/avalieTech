@@ -10,6 +10,7 @@ defmodule AvalieTech.Application do
     children = [
       AvalieTechWeb.Telemetry,
       AvalieTech.Repo,
+      {ChromicPDF, Application.get_env(:avalie_tech, ChromicPDF)},
       {DNSCluster, query: Application.get_env(:avalie_tech, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: AvalieTech.PubSub},
       # Start the Finch HTTP client for sending emails
