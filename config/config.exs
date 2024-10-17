@@ -36,6 +36,8 @@ config :swoosh,
   api_client: false,
   logger: true
 
+config :avalie_tech, ChromicPDF, no_sandbox: true
+
 # Configure esbuild (the version is required)
 config :esbuild,
   version: "0.17.11",
