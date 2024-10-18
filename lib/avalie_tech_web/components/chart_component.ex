@@ -12,7 +12,6 @@ defmodule AvalieTechWeb.ChartComponent do
 
     dataset = Dataset.new(data)
 
-    # Forneça o mapeamento e as opções ao criar o BarChart
     bar_chart =
       BarChart.new(
         dataset,
@@ -20,7 +19,6 @@ defmodule AvalieTechWeb.ChartComponent do
         data_labels: true
       )
 
-    # Ajuste a ordem dos parâmetros em Plot.new/3
     plot =
       Plot.new(600, 400, bar_chart)
       |> Plot.titles("Vendas Mensais", "Em milhares de reais")
